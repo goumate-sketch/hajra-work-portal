@@ -1,1 +1,0 @@
-# hajra-work-portal
