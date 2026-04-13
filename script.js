@@ -745,3 +745,31 @@ document.addEventListener('DOMContentLoaded', () => {
     observeNew();
   });
 });
+// =====================
+// 1. LOAD ARTICLES
+// =====================
+async function loadArticles() {
+  const res = await fetch('articles.json');
+  const articles = await res.json();
+
+  const grid = document.getElementById("news-grid");
+
+  grid.innerHTML = articles.map(article => `
+    <article class="card fade-in">
+      <img src="${article.image}" alt="${article.title}">
+      <div class="card-body">
+        <h3>${article.title}</h3>
+        <p>${article.content.substring(0, 120)}...</p>
+      </div>
+    </article>
+  `).join("");
+}
+
+// =====================
+// 2. INIT SITE
+// =====================
+function initSite() {
+  loadArticles();
+}
+
+initSite();
