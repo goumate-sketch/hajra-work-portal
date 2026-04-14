@@ -773,3 +773,31 @@ function initSite() {
 }
 
 initSite();
+async function loadRSS() {
+  const container = document.getElementById("news-grid");
+
+  try {
+    const res = await fetch(
+      "https://api.rss2json.com/v1/api.json?rss_url=https://rss.cnn.com/rss/edition_world.rss"
+    );
+
+    const data = await res.json();
+
+    container.innerHTML = "";
+
+    data.items.forEach(item => {
+      container.innerHTML += `
+        <article class="card">
+          <h3>${item.title}</h3>
+          <p>${item.description ? item.description.substring(0, 120) : ""}...</p>
+          <a href="${item.link}" target="_blank">اقرأ المزيد</a>
+        </article>
+      `;
+    });
+
+  } catch (error) {
+    console.log("RSS error:", error);
+  }
+}
+
+loadRSS();
