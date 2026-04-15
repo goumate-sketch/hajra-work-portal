@@ -978,3 +978,237 @@ footer {
   .stat-block .num { font-size: 1.6rem; }
   .section-title { font-size: 1.3rem; }
 }
+/* style.css - التصميم الموحد */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  min-height: 100vh;
+  color: white;
+  direction: rtl;
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* الحاوية الرئيسية */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* الهيدر والتنقل */
+header {
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(8px);
+  border-radius: 30px;
+  padding: 15px 25px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo h1 {
+  font-size: 1.8rem;
+}
+
+.logo p {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 40px;
+  transition: 0.3s;
+}
+
+nav a:hover, .active {
+  background: rgba(255,255,255,0.2);
+}
+
+/* البطاقات */
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.job-header, .news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.badge-new {
+  background: #ff7e5e;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* الفلتر */
+.filter-bar {
+  background: rgba(0,0,0,0.3);
+  border-radius: 50px;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-group input, .filter-group select, .search-btn {
+  padding: 10px 15px;
+  border-radius: 40px;
+  border: none;
+  font-size: 1rem;
+  background: white;
+  color: #1e3c72;
+}
+
+.search-btn {
+  background: #ff7e5e;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* الإعلانات (AdSense placeholders) */
+.ad-banner {
+  background: #2c3e66;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  margin: 20px 0;
+  border: 1px dashed #ffaa88;
+  color: #ccc;
+}
+
+.sidebar-ad {
+  background: #2c3e66;
+  border-radius: 20px;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px dashed #ffaa88;
+}
+
+.in-content-ad {
+  background: #2c3e66;
+  border-radius: 15px;
+  padding: 10px;
+  margin: 20px 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* التخطيط لصفحة الوظائف */
+.jobs-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.jobs-main {
+  flex: 3;
+  min-width: 250px;
+}
+
+.sidebar {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* الترقيم (pagination) */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button.active-page {
+  background: #ff7e5e;
+}
+
+/* زر تفاصيل */
+.btn-details {
+  display: inline-block;
+  background: #ff7e5e;
+  padding: 8px 20px;
+  border-radius: 40px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* أخبار */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* متجاوب */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .filter-bar {
+    flex-direction: column;
+    border-radius: 20px;
+  }
+  .jobs-layout {
+    flex-direction: column;
+  }
+}
