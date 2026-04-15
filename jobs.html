@@ -1,22 +1,76 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>الوظائف</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جميع الوظائف - بوابة الهجرة والعمل</title>
+  <meta name="description" content="تصفح جميع وظائف الهجرة والعمل في الخارج حسب الدولة والمجال والنوع.">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="container">
+  <header>
+    <div class="logo"><h1>🚀 بوابة الهجرة والعمل</h1><p>وظائف - هجرة - أخبار</p></div>
+    <nav><ul><li><a href="index.html">الرئيسية</a></li><li><a href="jobs.html" class="active">الوظائف</a></li><li><a href="news.html">الأخبار</a></li></ul></nav>
+  </header>
 
-<h1>كل الوظائف</h1>
+  <div class="ad-banner">📢 [إعلان AdSense Banner]</div>
 
-<input type="text" id="search">
+  <div class="filter-bar">
+    <input type="text" id="searchInput" placeholder="🔍 ابحث عن وظيفة أو شركة...">
+    <div class="filter-group">
+      <select id="countryFilter"><option value="all">جميع الدول</option><option value="ألمانيا">ألمانيا</option><option value="الإمارات">الإمارات</option><option value="السعودية">السعودية</option><option value="كندا">كندا</option><option value="هولندا">هولندا</option></select>
+      <select id="fieldFilter"><option value="all">جميع المجالات</option><option value="تكنولوجيا المعلومات">تكنولوجيا المعلومات</option><option value="الهندسة">الهندسة</option><option value="الموارد البشرية">الموارد البشرية</option><option value="الطب">الطب</option></select>
+      <select id="typeFilter"><option value="all">جميع الأنواع</option><option value="دوام كامل">دوام كامل</option><option value="عن بُعد">عن بُعد</option></select>
+      <button class="search-btn" id="applyFilter">بحث</button>
+    </div>
+  </div>
 
-<select id="countryFilter"></select>
-
-<div id="jobsContainer"></div>
+  <div class="jobs-layout">
+    <div class="jobs-main">
+      <div id="jobs-list"></div>
+      <div id="jobs-pagination"></div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-ad">📢 [إعلان AdSense Sidebar]</div>
+      <div class="sidebar-ad">📢 [إعلان AdSense Sidebar 2]</div>
+    </div>
+  </div>
+</div>
 
 <script src="data.js"></script>
-<script src="jobs.js"></script>
+<script src="script.js"></script>
+<script>
+  let currentJobs = sortJobsByDate(jobsData);
+  let currentPage = 1;
+  const itemsPerPage = 4;
 
+  function updateJobsList() {
+    const search = document.getElementById('searchInput').value;
+    const country = document.getElementById('countryFilter').value;
+    const field = document.getElementById('fieldFilter').value;
+    const type = document.getElementById('typeFilter').value;
+    const filtered = filterJobs(currentJobs, search, country, field, type);
+    renderJobs(filtered, 'jobs-list', itemsPerPage, currentPage);
+    // إعادة ربط pagination يدوياً (لأن renderJobs ينشئ أزرار جديدة)
+    const pagDiv = document.getElementById('jobs-pagination');
+    if(pagDiv) {
+      const totalPages = Math.ceil(filtered.length / itemsPerPage);
+      let btns = pagDiv.querySelectorAll('button');
+      btns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          currentPage = parseInt(btn.getAttribute('data-page'));
+          updateJobsList();
+        });
+      });
+    }
+  }
+
+  document.getElementById('applyFilter').addEventListener('click', () => {
+    currentPage = 1;
+    updateJobsList();
+  });
+  updateJobsList();
+</script>
 </body>
 </html>
