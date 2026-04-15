@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>تفاصيل الوظيفة</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل الوظيفة - بوابة الهجرة والعمل</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div id="jobDetails"></div>
-
+<div class="container">
+  <header>... (نفس الهيدر السابق) ...</header>
+  <div class="ad-banner">📢 [إعلان]</div>
+  <div id="job-detail" class="card"></div>
+</div>
 <script src="data.js"></script>
-<script src="job.js"></script>
-
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const jobId = parseInt(urlParams.get('id'));
+  const job = jobsData.find(j => j.id === jobId);
+  const container = document.getElementById('job-detail');
+  if(job) {
+    container.innerHTML = `
+      <h2>${job.title}</h2>
+      <p><strong>${job.company}</strong> - ${job.country}</p>
+      <p>📅 النشر: ${job.postedAt}</p>
+      <p>💰 الراتب: ${job.salary}</p>
+      <p>📝 الوصف: ${job.description}</p>
+      <p>🔧 المتطلبات: ${job.requirements}</p>
+      <a href="jobs.html" class="btn-details">← العودة إلى جميع الوظائف</a>
+    `;
+  } else {
+    container.innerHTML = '<p>عذراً، الوظيفة غير موجودة.</p>';
+  }
+</script>
 </body>
 </html>
