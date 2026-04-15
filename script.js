@@ -801,3 +801,90 @@ async function loadRSS() {
 }
 
 loadRSS();
+// script.js - دوال مساعدة مشتركة
+
+// دالة لتحميل البيانات من data.js (المتغيرات عامة لأن data.js محمل قبل)
+function getJobs() {
+  return window.jobsData || [];
+}
+
+function getNews() {
+  return window.newsData || [];
+}
+
+// ترتيب الوظائف من الأحدث للأقدم
+function sortJobsByDate(jobs) {
+  return [...jobs].sort((a,b) => new Date(b.postedAt) - new Date(a.postedAt));
+}
+
+// عرض الوظائف في عنصر معين مع pagination
+function renderJobs(jobs, containerId, itemsPerPage = 5, currentPage = 1) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const start = (currentPage - 1) * itemsPerPage;
+  const paginatedJobs = jobs.slice(start, start + itemsPerPage);
+  
+  let html = '';
+  paginatedJobs.forEach(job => {
+    const isNew = (typeof isNewJob !== 'undefined') ? isNewJob(job.postedAt) : false;
+    html += `
+      <div class="card">
+        <div class="job-header">
+          <h3>${job.title}</h3>
+          ${isNew ? '<span class="badge-new">جديد</span>' : ''}
+        </div>
+        <p><strong>${job.company}</strong> - ${job.country}</p>
+        <p>📂 ${job.field} | ⏱️ ${job.type}</p>
+        <p>📅 النشر: ${job.postedAt}</p>
+        <a href="job.html?id=${job.id}" class="btn-details">تفاصيل الوظيفة →</a>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+  
+  // إضافة pagination controls
+  const totalPages = Math.ceil(jobs.length / itemsPerPage);
+  const paginationDiv = document.getElementById(`${containerId}-pagination`);
+  if (paginationDiv && totalPages > 1) {
+    let pagHtml = '';
+    for (let i = 1; i <= totalPages; i++) {
+      pagHtml += `<button class="${i === currentPage ? 'active-page' : ''}" data-page="${i}">${i}</button>`;
+    }
+    paginationDiv.innerHTML = pagHtml;
+    paginationDiv.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const page = parseInt(btn.getAttribute('data-page'));
+        renderJobs(jobs, containerId, itemsPerPage, page);
+      });
+    });
+  }
+}
+
+// دالة بحث وفلترة (لصفحة jobs.html)
+function filterJobs(jobs, searchTerm, country, field, type) {
+  return jobs.filter(job => {
+    const matchSearch = searchTerm === '' || job.title.includes(searchTerm) || job.company.includes(searchTerm);
+    const matchCountry = country === 'all' || job.country === country;
+    const matchField = field === 'all' || job.field === field;
+    const matchType = type === 'all' || job.type === type;
+    return matchSearch && matchCountry && matchField && matchType;
+  });
+}
+
+// عرض الأخبار
+function renderNews(news, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  let html = '';
+  news.forEach(item => {
+    html += `
+      <div class="card">
+        <h3>${item.title}</h3>
+        <p>📅 ${item.date}</p>
+        <p>${item.summary}</p>
+        <a href="${item.link}" class="btn-details">اقرأ المزيد</a>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
